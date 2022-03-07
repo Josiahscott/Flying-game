@@ -234,7 +234,7 @@ mesh = SubResource( 4 )
 material/0 = null
 
 [node name="Cylinder001" type="Spatial" parent="Mesh/Body/cbdb2b201266454e947bf115439508aefbx/Node/RootNode/Cylinder"]
-transform = Transform( 0.235587, 0.0268668, -0.190105, 0.010257, 0.298732, 0.0549296, 0.19172, -0.0489963, 0.230664, -13.3199, 6.86497, 16.4173 )
+transform = Transform( 0.303913, 0, 0, 0, 0.303913, 0, 0, 0, 0.303913, -6.22084e-07, -2.27591e-07, 1.90916 )
 
 [node name="Cylinder001_Material005_0" type="MeshInstance" parent="Mesh/Body/cbdb2b201266454e947bf115439508aefbx/Node/RootNode/Cylinder/Cylinder001"]
 mesh = SubResource( 5 )
