@@ -1,5 +1,10 @@
 extends KinematicBody
 
+
+onready var LEFT_AILERON = $Plane/Plane/Body/Parts/LEFT_AILERON
+onready var RIGHT_AILERON = $Plane/Plane/Body/Parts/RIGHT_AILERON
+onready var ELEVATOR = $Plane/Plane/Body/Parts/ELEVATOR
+onready var RUDDER = $Plane/Plane/Body/Parts/RUDDER
 var gravity = Vector3(0,9.8,0)
 
 var min_take_off_speed = 10
@@ -29,6 +34,14 @@ var velocity = Vector3.ZERO
 var turn_input = 0
 var pitch_input = 0
 
+var LEFT_UP_TARGET = Vector3(21.1, -1.9, 0)
+var RIGHT_DOWN_TARGET = Vector3(-21.1, -4.5, 1.5)
+var LEFT_DOWN_TARGET = Vector3(-21.1, 2.3, 0)
+var RIGHT_UP_TARGET = Vector3(21.1, 3.5, 0)
+var ELEVATOR_UP_TARGET = Vector3(20,0,0)
+var ELEVATOR_DOWN_TARGET = Vector3(-20,0,0)
+var RUDDER_LEFT_TARGET = Vector3(0,0,10)
+var RUDDER_RIGHT_TARGET = Vector3(0,0,-10)
 
 func _ready():
 	DebugOverlay.stats.add_property(self, "grounded", "")
@@ -64,7 +77,6 @@ func _physics_process(delta):
 #	print(velocity.y + velocity.x)
 	velocity = move_and_slide(velocity, Vector3.UP)
 
-
 func get_input(delta):
 	# Throttle input
 	if Input.is_action_pressed("throttle_up"):
@@ -83,4 +95,32 @@ func get_input(delta):
 		pitch_input -= Input.get_action_strength("pitch_down")
 	if forward_speed >= min_take_off_speed:
 		pitch_input += Input.get_action_strength("pitch_up")
+
+	if Input.is_action_pressed("roll_left"):
+		LEFT_AILERON.rotation_degrees = lerp(LEFT_AILERON.rotation_degrees, LEFT_UP_TARGET, .1)
+		RIGHT_AILERON.rotation_degrees = lerp(RIGHT_AILERON.rotation_degrees, RIGHT_DOWN_TARGET, .1)
+		RUDDER.rotation_degrees = lerp(RUDDER.rotation_degrees, RUDDER_LEFT_TARGET, .1)
+	else:
+		LEFT_AILERON.rotation_degrees = lerp(LEFT_AILERON.rotation_degrees, Vector3.ZERO, .1)
+		RIGHT_AILERON.rotation_degrees = lerp(RIGHT_AILERON.rotation_degrees, Vector3.ZERO, .1)
+		RUDDER.rotation_degrees = lerp(RUDDER.rotation_degrees, Vector3.ZERO, .1)
+	if Input.is_action_pressed("roll_right"):
+		LEFT_AILERON.rotation_degrees = lerp(LEFT_AILERON.rotation_degrees, LEFT_DOWN_TARGET, .1)
+		RIGHT_AILERON.rotation_degrees = lerp(RIGHT_AILERON.rotation_degrees, RIGHT_UP_TARGET, .1)
+	else:
+		LEFT_AILERON.rotation_degrees = lerp(LEFT_AILERON.rotation_degrees, Vector3.ZERO, .1)
+		RIGHT_AILERON.rotation_degrees = lerp(RIGHT_AILERON.rotation_degrees, Vector3.ZERO, .1)
+
+	if Input.is_action_pressed("pitch_up"):
+		ELEVATOR.rotation_degrees = lerp(ELEVATOR.rotation_degrees, ELEVATOR_UP_TARGET, .1)
+	else:
+		ELEVATOR.rotation_degrees = lerp(ELEVATOR.rotation_degrees, Vector3.ZERO, .1)
+	if Input.is_action_pressed("pitch_down"):
+		ELEVATOR.rotation_degrees = lerp(ELEVATOR.rotation_degrees, ELEVATOR_DOWN_TARGET, .1)
+	else:
+		ELEVATOR.rotation_degrees = lerp(ELEVATOR.rotation_degrees, Vector3.ZERO, .1)
+
+
+
+
 
