@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/Plane.glb-9d59f971a1eb6c1ef950d90c23b47da3.scn"
+path="res://.import/Plane.glb-c821fceebb4f44eafa38836c9864acc8.scn"
 
 [deps]
 
-source_file="res://Test assest/Plane.glb"
-dest_files=[ "res://.import/Plane.glb-9d59f971a1eb6c1ef950d90c23b47da3.scn" ]
+source_file="res://Plane/Plane.glb"
+dest_files=[ "res://.import/Plane.glb-c821fceebb4f44eafa38836c9864acc8.scn" ]
 
 [params]
 

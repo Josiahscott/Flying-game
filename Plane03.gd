@@ -5,6 +5,8 @@ onready var LEFT_AILERON = $Plane/Plane/Body/Parts/LEFT_AILERON
 onready var RIGHT_AILERON = $Plane/Plane/Body/Parts/RIGHT_AILERON
 onready var ELEVATOR = $Plane/Plane/Body/Parts/ELEVATOR
 onready var RUDDER = $Plane/Plane/Body/Parts/RUDDER
+onready var ROLL = $Plane/Plane/Body
+onready var PROPELLOR = $Plane/Plane/Body/Parts/PROP
 var gravity = Vector3(0,9.8,0)
 
 var min_take_off_speed = 10
@@ -34,14 +36,16 @@ var velocity = Vector3.ZERO
 var turn_input = 0
 var pitch_input = 0
 
-var LEFT_UP_TARGET = Vector3(21.1, -1.9, 0)
-var RIGHT_DOWN_TARGET = Vector3(-21.1, -4.5, 1.5)
-var LEFT_DOWN_TARGET = Vector3(-21.1, 2.3, 0)
-var RIGHT_UP_TARGET = Vector3(21.1, 3.5, 0)
-var ELEVATOR_UP_TARGET = Vector3(20,0,0)
-var ELEVATOR_DOWN_TARGET = Vector3(-20,0,0)
-var RUDDER_LEFT_TARGET = Vector3(0,0,10)
-var RUDDER_RIGHT_TARGET = Vector3(0,0,-10)
+var LEFT_UP_TARGET = Vector3(35,-4.3,-2.3)
+var RIGHT_DOWN_TARGET = Vector3(-35, -4.8, 3)
+var LEFT_DOWN_TARGET = Vector3(-35, 3.8, -1.7)
+var RIGHT_UP_TARGET = Vector3(35, 3.2, -0.5)
+var ELEVATOR_UP_TARGET = Vector3(40,0,0)
+var ELEVATOR_DOWN_TARGET = Vector3(-40,0,0)
+var RUDDER_LEFT_TARGET = Vector3(2.5,-10.5,-30)
+var RUDDER_RIGHT_TARGET = Vector3(-2.5,10.5,30)
+var ROLL_LEFT_TARGET = Vector3(0,30,0)
+var ROLL_RIGHT_TARGET = Vector3(0,-30,0)
 
 func _ready():
 	DebugOverlay.stats.add_property(self, "grounded", "")
@@ -60,6 +64,7 @@ func _physics_process(delta):
 		$Mesh/Body.rotation.y = lerp($Mesh/Body.rotation.y, turn_input, level_speed * delta)
 	# Accelerate/decelerate
 	forward_speed = lerp(forward_speed, target_speed, acceleration * delta)
+	PROPELLOR.rotation_degrees.y += rad2deg(1*forward_speed * delta)
 	# Movement is always forward
 	velocity = -transform.basis.z * forward_speed
 	# Handle landing/taking off
@@ -97,19 +102,36 @@ func get_input(delta):
 		pitch_input += Input.get_action_strength("pitch_up")
 
 	if Input.is_action_pressed("roll_left"):
+		if not grounded:
+			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, ROLL_LEFT_TARGET, .1)
+		else:
+			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, Vector3.ZERO, .1)
+	if Input.is_action_pressed("roll_right"):
+		if not grounded:
+			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, ROLL_RIGHT_TARGET, .1)
+		else:
+			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, Vector3.ZERO, .1)
+			
+	if Input.is_action_pressed("roll_left"):
 		LEFT_AILERON.rotation_degrees = lerp(LEFT_AILERON.rotation_degrees, LEFT_UP_TARGET, .1)
 		RIGHT_AILERON.rotation_degrees = lerp(RIGHT_AILERON.rotation_degrees, RIGHT_DOWN_TARGET, .1)
 		RUDDER.rotation_degrees = lerp(RUDDER.rotation_degrees, RUDDER_LEFT_TARGET, .1)
+
 	else:
 		LEFT_AILERON.rotation_degrees = lerp(LEFT_AILERON.rotation_degrees, Vector3.ZERO, .1)
 		RIGHT_AILERON.rotation_degrees = lerp(RIGHT_AILERON.rotation_degrees, Vector3.ZERO, .1)
 		RUDDER.rotation_degrees = lerp(RUDDER.rotation_degrees, Vector3.ZERO, .1)
+
 	if Input.is_action_pressed("roll_right"):
 		LEFT_AILERON.rotation_degrees = lerp(LEFT_AILERON.rotation_degrees, LEFT_DOWN_TARGET, .1)
 		RIGHT_AILERON.rotation_degrees = lerp(RIGHT_AILERON.rotation_degrees, RIGHT_UP_TARGET, .1)
+		RUDDER.rotation_degrees = lerp(RUDDER.rotation_degrees, RUDDER_RIGHT_TARGET, .1)
+
 	else:
 		LEFT_AILERON.rotation_degrees = lerp(LEFT_AILERON.rotation_degrees, Vector3.ZERO, .1)
 		RIGHT_AILERON.rotation_degrees = lerp(RIGHT_AILERON.rotation_degrees, Vector3.ZERO, .1)
+		RUDDER.rotation_degrees = lerp(RUDDER.rotation_degrees, Vector3.ZERO, .1)
+
 
 	if Input.is_action_pressed("pitch_up"):
 		ELEVATOR.rotation_degrees = lerp(ELEVATOR.rotation_degrees, ELEVATOR_UP_TARGET, .1)
