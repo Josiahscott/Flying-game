@@ -7,13 +7,14 @@ onready var ELEVATOR = $Plane/Plane/Body/Parts/ELEVATOR
 onready var RUDDER = $Plane/Plane/Body/Parts/RUDDER
 onready var ROLL = $Plane/Plane/Body
 onready var PROPELLOR = $Plane/Plane/Body/Parts/PROP
-var gravity = Vector3(0,9.8,0)
+onready var FLAPS = $Plane/Plane/Body/Parts/FLAPS
+var gravity = Vector3(0,rotation_degrees.x*3,0)
 
-var min_take_off_speed = 10
+var min_take_off_speed = 30
 # Can't fly below this speed
-var min_flight_speed = 00
+var min_flight_speed = 0
 # Maximum airspeed
-var max_flight_speed = 40
+var max_flight_speed = 600
 # Turn rate
 var turn_speed = 1.5
 # Climb/dive rate
@@ -44,8 +45,9 @@ var ELEVATOR_UP_TARGET = Vector3(40,0,0)
 var ELEVATOR_DOWN_TARGET = Vector3(-40,0,0)
 var RUDDER_LEFT_TARGET = Vector3(2.5,-10.5,-30)
 var RUDDER_RIGHT_TARGET = Vector3(-2.5,10.5,30)
-var ROLL_LEFT_TARGET = Vector3(0,30,0)
-var ROLL_RIGHT_TARGET = Vector3(0,-30,0)
+var ROLL_LEFT_TARGET = Vector3(0,40,0)
+var ROLL_RIGHT_TARGET = Vector3(0,-40,0) 
+var FLAPS_DOWN_TARGET = Vector3(-30,0,0) 
 
 func _ready():
 	DebugOverlay.stats.add_property(self, "grounded", "")
@@ -64,7 +66,7 @@ func _physics_process(delta):
 		$Mesh/Body.rotation.y = lerp($Mesh/Body.rotation.y, turn_input, level_speed * delta)
 	# Accelerate/decelerate
 	forward_speed = lerp(forward_speed, target_speed, acceleration * delta)
-	PROPELLOR.rotation_degrees.y += rad2deg(1*forward_speed * delta)
+	PROPELLOR.rotation_degrees.y += rad2deg(1.75*forward_speed * delta)
 	# Movement is always forward
 	velocity = -transform.basis.z * forward_speed
 	# Handle landing/taking off
@@ -78,10 +80,8 @@ func _physics_process(delta):
 	if forward_speed < gravity.y:
 		var current_gravity = gravity - Vector3(0,forward_speed,0)
 		velocity = velocity - current_gravity
-	#print(velocity)
-#	print(velocity.y + velocity.x)
 	velocity = move_and_slide(velocity, Vector3.UP)
-
+	
 func get_input(delta):
 	# Throttle input
 	if Input.is_action_pressed("throttle_up"):
@@ -98,18 +98,24 @@ func get_input(delta):
 	pitch_input = 0
 	if not grounded:
 		pitch_input -= Input.get_action_strength("pitch_down")
-	if forward_speed >= min_take_off_speed:
+	if not grounded:
 		pitch_input += Input.get_action_strength("pitch_up")
+	if grounded:
+		if forward_speed >= min_take_off_speed:
+			pitch_input += Input.get_action_strength("pitch_up")
+		elif forward_speed <= min_take_off_speed:
+			pitch_input += 0
+
 
 	if Input.is_action_pressed("roll_left"):
 		if not grounded:
 			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, ROLL_LEFT_TARGET, .1)
-		else:
+	else:
 			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, Vector3.ZERO, .1)
 	if Input.is_action_pressed("roll_right"):
 		if not grounded:
 			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, ROLL_RIGHT_TARGET, .1)
-		else:
+	else:
 			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, Vector3.ZERO, .1)
 			
 	if Input.is_action_pressed("roll_left"):
@@ -141,7 +147,12 @@ func get_input(delta):
 		ELEVATOR.rotation_degrees = lerp(ELEVATOR.rotation_degrees, ELEVATOR_DOWN_TARGET, .1)
 	else:
 		ELEVATOR.rotation_degrees = lerp(ELEVATOR.rotation_degrees, Vector3.ZERO, .1)
-
+	if Input.is_action_pressed("flaps_down"):
+		gravity = Vector3(0,9.8,0)
+		FLAPS.rotation_degrees = lerp(FLAPS.rotation_degrees, FLAPS_DOWN_TARGET, .1)
+	else:
+		FLAPS.rotation_degrees = lerp(FLAPS.rotation_degrees, Vector3.ZERO, .1)
+		gravity = Vector3(0,9.8*3,0)
 
 
 

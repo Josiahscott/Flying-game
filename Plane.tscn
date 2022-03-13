@@ -4,6 +4,9 @@
 
 [node name="Plane" instance=ExtResource( 1 )]
 
+[node name="FLAPS" parent="Plane/Body/Parts" index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.583941, 0.550695 )
+
 [node name="LEFT_AILERON" parent="Plane/Body/Parts" index="5"]
 transform = Transform( 0.998393, -0.00594799, 0.0563578, -0.0260467, 0.835052, 0.549556, -0.0503304, -0.550142, 0.833555, 3.33258, 0.485874, 0.670038 )
 
