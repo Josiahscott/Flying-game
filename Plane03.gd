@@ -148,11 +148,12 @@ func get_input(delta):
 	else:
 		ELEVATOR.rotation_degrees = lerp(ELEVATOR.rotation_degrees, Vector3.ZERO, .1)
 	if Input.is_action_pressed("flaps_down"):
-		gravity = Vector3(0,9.8,0)
+		gravity = Vector3(0,9.8*2,0)
 		FLAPS.rotation_degrees = lerp(FLAPS.rotation_degrees, FLAPS_DOWN_TARGET, .1)
-	else:
-		FLAPS.rotation_degrees = lerp(FLAPS.rotation_degrees, Vector3.ZERO, .1)
+	if Input.is_action_pressed("flaps_up"):
 		gravity = Vector3(0,9.8*3,0)
+		FLAPS.rotation_degrees = lerp(FLAPS.rotation_degrees, Vector3.ZERO, .1)
+
 
 
 

@@ -4,7 +4,7 @@
 code = "shader_type spatial;
 
 uniform vec4 out_color : hint_color = vec4(0.0, 0.2, 1.0, 1.0);
-uniform float amount : hint_range(0.2, 1.5) = 0.8;
+uniform float amount : hint_range(0.2, 1.5) = 0.5;
 uniform float beer_factor = 100000;
 
 float generateOffset(float x, float z, float val1, float val2, float time){
@@ -49,12 +49,15 @@ void fragment(){
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
+shader_param/out_color = Color( 0, 0.2, 1, 1 )
+shader_param/amount = 0.5
+shader_param/beer_factor = 100000.0
 
 [sub_resource type="PlaneMesh" id=3]
 material = SubResource( 2 )
 size = Vector2( 600, 600 )
-subdivide_width = 300
-subdivide_depth = 300
+subdivide_width = 600
+subdivide_depth = 600
 
 [node name="Water" type="Spatial"]
 

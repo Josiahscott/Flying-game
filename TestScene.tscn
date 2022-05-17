@@ -55,19 +55,10 @@ size = Vector3( 8, 20, 8 )
 [node name="TestScene" type="Spatial"]
 script = ExtResource( 2 )
 
-[node name="Ground" type="MeshInstance" parent="."]
-mesh = SubResource( 1 )
-material/0 = null
-
-[node name="StaticBody" type="StaticBody" parent="Ground"]
-
-[node name="CollisionShape" type="CollisionShape" parent="Ground/StaticBody"]
-shape = SubResource( 9 )
-
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2078, 11.3196, 59.0329 )
 current = true
-far = 200.0
+far = 5000.0
 script = ExtResource( 3 )
 target_path = NodePath("../Plane03")
 offset = Vector3( 0, 5, 5 )
@@ -75,39 +66,49 @@ offset = Vector3( 0, 5, 5 )
 [node name="Plane03" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.829353, 40.5275 )
 
-[node name="KinematicBody" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.28221, 9.80573, -18.9735 )
+[node name="Test World" type="Spatial" parent="."]
 
-[node name="MeshInstance2" type="MeshInstance" parent="KinematicBody"]
-mesh = SubResource( 6 )
+[node name="Ground" type="MeshInstance" parent="Test World"]
+mesh = SubResource( 1 )
 skeleton = NodePath("../..")
 material/0 = null
 
-[node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
+[node name="StaticBody" type="StaticBody" parent="Test World/Ground"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Test World/Ground/StaticBody"]
+shape = SubResource( 9 )
+
+[node name="KinematicBody" type="KinematicBody" parent="Test World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.28221, 9.80573, -18.9735 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Test World/KinematicBody"]
+mesh = SubResource( 6 )
+skeleton = NodePath("../../..")
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Test World/KinematicBody"]
 shape = SubResource( 10 )
 
-[node name="MeshInstance3" type="MeshInstance" parent="."]
+[node name="MeshInstance3" type="MeshInstance" parent="Test World"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.7462, 11.9899, -6.8877 )
 mesh = SubResource( 8 )
+skeleton = NodePath("../..")
 material/0 = null
 
-[node name="MeshInstance4" type="MeshInstance" parent="."]
+[node name="MeshInstance4" type="MeshInstance" parent="Test World"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32.2632, 9.83015, 17.6479 )
 mesh = SubResource( 2 )
+skeleton = NodePath("../..")
 material/0 = null
 
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
+[node name="Light 1" type="DirectionalLight" parent="."]
 transform = Transform( 0.996485, -0.0270087, 0.0792953, -0.0669426, -0.825799, 0.559978, 0.0503577, -0.563318, -0.824704, 0, 42.0644, 0 )
 shadow_enabled = true
 
-[node name="DirectionalLight2" type="DirectionalLight" parent="."]
+[node name="Light 2" type="DirectionalLight" parent="."]
 transform = Transform( 0.996485, -0.0270087, 0.0792953, -0.0459144, 0.61564, 0.786689, -0.0700648, -0.787564, 0.612237, -37.2241, 42.0644, 0 )
 light_energy = 0.25
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 8 )
-
-[node name="Camera2" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27.2758, 28.5167, -6.91097 )
-far = 300.0
