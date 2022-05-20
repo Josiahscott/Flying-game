@@ -14,8 +14,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="airplane_test"
-run/main_scene="res://TestScene.tscn"
+config/name="airplane"
+run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
 
 [autoload]
