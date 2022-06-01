@@ -22,6 +22,10 @@ config/icon="res://icon.png"
 
 DebugOverlay="*res://debug/DebugOverlay.tscn"
 
+[global]
+
+distance=false
+
 [input]
 
 ui_end={
