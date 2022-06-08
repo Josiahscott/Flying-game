@@ -25,7 +25,8 @@ var level_speed = 3.0
 var throttle_delta = 30
 # Acceleration/deceleration
 var acceleration = 15
-var Boost = 0
+#Altitude
+var Altitude = 0
 # Current speed
 var forward_speed = 0
 # Throttle input speed
@@ -52,13 +53,12 @@ var FLAPS_DOWN_TARGET = Vector3(-30,0,0)
 func _ready():
 	DebugOverlay.stats.add_property(self, "grounded", "")
 	DebugOverlay.stats.add_property(self, "forward_speed", "round")
-	DebugOverlay.stats.add_property(self, "Boost", "round")
-	
+	DebugOverlay.stats.add_property(self, "Altitude", "round")
+ 
 func _physics_process(delta):
-	if Input.is_action_pressed("throttle_up"):
-		Boost = + 1
 
-	
+	Altitude = (global_transform.origin.y)
+
 	get_input(delta)
 	# Rotate the transform based on the input values
 	transform.basis = transform.basis.rotated(transform.basis.x, pitch_input * pitch_speed * delta)

@@ -1,11 +1,11 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/airplane/Material_001.material" type="Material" id=1]
 [ext_resource path="res://assets/airplane/Material_002.material" type="Material" id=2]
 [ext_resource path="res://assets/airplane/Material_003.material" type="Material" id=3]
 [ext_resource path="res://assets/airplane/Material_005.material" type="Material" id=4]
 [ext_resource path="res://assets/airplane/Material_004.material" type="Material" id=5]
-[ext_resource path="res://Plane/Plane03.gd" type="Script" id=6]
+[ext_resource path="res://Plane/player.gd" type="Script" id=6]
 [ext_resource path="res://Plane/Plane.tscn" type="PackedScene" id=7]
 
 [sub_resource type="ArrayMesh" id=1]
@@ -100,7 +100,11 @@ surfaces/0 = {
 radius = 0.955744
 height = 7.11038
 
-[node name="Plane03" type="KinematicBody"]
+[sub_resource type="CylinderShape" id=17]
+radius = 0.568409
+height = 11.3063
+
+[node name="Player" type="KinematicBody"]
 script = ExtResource( 6 )
 
 [node name="Mesh" type="Spatial" parent="."]
@@ -155,9 +159,13 @@ transform = Transform( 1, 0, 0, 0, 2.22045e-16, -1, 0, 1, 2.22045e-16, 0, 0, 0 )
 
 [node name="Node 3" type="Spatial" parent="Mesh/Body/cbdb2b201266454e947bf115439508aefbx/Node/RootNode/Point/Node 2"]
 
+[node name="Plane" parent="." instance=ExtResource( 7 )]
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0 )
+
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 1.24609 )
 shape = SubResource( 16 )
 
-[node name="Plane" parent="." instance=ExtResource( 7 )]
-transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0 )
+[node name="CollisionShape2" type="CollisionShape" parent="."]
+transform = Transform( -0.0113619, 0.999935, 0, -0.999935, -0.0113619, 0, 0, 0, 1, 0, 0.772825, 0 )
+shape = SubResource( 17 )

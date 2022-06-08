@@ -1,13 +1,13 @@
 [gd_scene load_steps=20 format=2]
 
-[ext_resource path="res://Plane/Plane03.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Plane/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
 [ext_resource path="res://Camera.gd" type="Script" id=3]
 [ext_resource path="res://assets/prototype_textures/Dark/texture_03.png" type="Texture" id=4]
 [ext_resource path="res://assets/prototype_textures/Red/texture_09.png" type="Texture" id=5]
 [ext_resource path="res://assets/prototype_textures/Orange/texture_02.png" type="Texture" id=6]
 [ext_resource path="res://assets/prototype_textures/Green/texture_13.png" type="Texture" id=7]
-[ext_resource path="res://lighting_env.tres" type="Environment" id=8]
+[ext_resource path="res://default_env.tres" type="Environment" id=8]
 [ext_resource path="res://Island.tscn" type="PackedScene" id=9]
 
 [sub_resource type="SpatialMaterial" id=3]
@@ -56,9 +56,6 @@ size = Vector3( 8, 20, 8 )
 [node name="World" type="Spatial"]
 script = ExtResource( 2 )
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 8 )
-
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2078, 11.3196, 59.0329 )
 current = true
@@ -68,12 +65,11 @@ target_path = NodePath("../Plane")
 offset = Vector3( 0, 5, 5 )
 
 [node name="Plane" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02441, -1.67339 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2889.95, 167.569, -2535.73 )
 
 [node name="OmniLight" type="OmniLight" parent="Plane"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 68.5812, 1.67339 )
-light_energy = 2.495
-omni_range = 552.017
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 762.983, 1.67334 )
+omni_range = 1218.12
 
 [node name="Old assest World" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 97.638, 0 )
@@ -113,4 +109,7 @@ skeleton = NodePath("../..")
 material/0 = null
 
 [node name="Island" parent="." instance=ExtResource( 9 )]
-transform = Transform( 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 13.677, 0 )
+transform = Transform( 750, 0, 0, 0, 600, 0, 0, 0, 750, 0, 882.488, 0 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 8 )
