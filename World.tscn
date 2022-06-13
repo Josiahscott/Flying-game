@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Plane/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://assets/prototype_textures/Green/texture_13.png" type="Texture" id=7]
 [ext_resource path="res://default_env.tres" type="Environment" id=8]
 [ext_resource path="res://Island.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Water/Water.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Objective/random.tscn" type="PackedScene" id=11]
 
 [sub_resource type="SpatialMaterial" id=3]
 albedo_texture = ExtResource( 4 )
@@ -59,7 +61,7 @@ script = ExtResource( 2 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2078, 11.3196, 59.0329 )
 current = true
-far = 5000.0
+far = 50000.0
 script = ExtResource( 3 )
 target_path = NodePath("../Plane")
 offset = Vector3( 0, 5, 5 )
@@ -109,7 +111,14 @@ skeleton = NodePath("../..")
 material/0 = null
 
 [node name="Island" parent="." instance=ExtResource( 9 )]
-transform = Transform( 750, 0, 0, 0, 600, 0, 0, 0, 750, 0, 882.488, 0 )
+transform = Transform( 750, 0, 0, 0, 600, 0, 0, 0, 750, 0, 866.479, 0 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 8 )
+
+[node name="Water" parent="." instance=ExtResource( 10 )]
+visible = false
+
+[node name="Spatial" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 449.881, 220.395, -1901.63 )
+visible = true

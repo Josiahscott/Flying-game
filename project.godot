@@ -25,6 +25,7 @@ DebugOverlay="*res://debug/DebugOverlay.tscn"
 [global]
 
 distance=false
+render=false
 
 [input]
 

@@ -33,6 +33,13 @@ var forward_speed = 0
 var target_speed = 0
 # Lets us change behavior when grounded
 var grounded = false
+#RPM
+var RPM = 0
+#Flaps
+var Flaps = 0 
+#Fuel
+var Fuel = 100
+var Fuel_flow
 
 var velocity = Vector3.ZERO
 var turn_input = 0
@@ -54,11 +61,21 @@ func _ready():
 	DebugOverlay.stats.add_property(self, "grounded", "")
 	DebugOverlay.stats.add_property(self, "forward_speed", "round")
 	DebugOverlay.stats.add_property(self, "Altitude", "round")
- 
+	DebugOverlay.stats.add_property(self, "RPM", "round")
+	DebugOverlay.stats.add_property(self, "Flaps", "round")
+	DebugOverlay.stats.add_property(self, "Fuel", "round")
+	DebugOverlay.stats.add_property(self, "Fuel_flow", "round")
+
+
 func _physics_process(delta):
 
 	Altitude = (global_transform.origin.y)
+	RPM = forward_speed * 10
+	RPM = clamp(RPM,0,2400)
+	Flaps = FLAPS.rotation_degrees.x * -1
+	Fuel_flow = RPM / 1000
 
+	
 	get_input(delta)
 	# Rotate the transform based on the input values
 	transform.basis = transform.basis.rotated(transform.basis.x, pitch_input * pitch_speed * delta)
@@ -161,6 +178,6 @@ func get_input(delta):
 	else:
 		gravity = Vector3(0,9.8*3,0)
 	
-
-
-
+func _on_Timer_timeout():
+	Fuel - Fuel_flow
+	

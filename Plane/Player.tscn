@@ -169,3 +169,8 @@ shape = SubResource( 16 )
 [node name="CollisionShape2" type="CollisionShape" parent="."]
 transform = Transform( -0.0113619, 0.999935, 0, -0.999935, -0.0113619, 0, 0, 0, 1, 0, 0.772825, 0 )
 shape = SubResource( 17 )
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
