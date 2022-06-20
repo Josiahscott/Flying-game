@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Plane/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
@@ -11,6 +11,12 @@
 [ext_resource path="res://Island.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Water/Water.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Objective/random.tscn" type="PackedScene" id=11]
+
+[sub_resource type="PrismMesh" id=11]
+size = Vector3( 1, 1.5, 0.1 )
+
+[sub_resource type="SpatialMaterial" id=12]
+albedo_color = Color( 0.945098, 0, 0, 1 )
 
 [sub_resource type="SpatialMaterial" id=3]
 albedo_texture = ExtResource( 4 )
@@ -59,19 +65,30 @@ size = Vector3( 8, 20, 8 )
 script = ExtResource( 2 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2078, 11.3196, 59.0329 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2889.95, 169.434, -2516.67 )
 current = true
 far = 50000.0
 script = ExtResource( 3 )
-target_path = NodePath("../Plane")
-offset = Vector3( 0, 5, 5 )
+lerp_speed = null
 
-[node name="Plane" parent="." instance=ExtResource( 1 )]
+[node name="Arrow" type="Spatial" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.27518, -7.68652 )
+
+[node name="Part 2" type="MeshInstance" parent="Camera/Arrow"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.84044, -0.580566 )
+mesh = SubResource( 11 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 12 )
+
+[node name="Plane" parent="." groups=["PlanePos"] instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2889.95, 167.569, -2535.73 )
 
 [node name="OmniLight" type="OmniLight" parent="Plane"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 762.983, 1.67334 )
 omni_range = 1218.12
+
+[node name="Position3D" type="Position3D" parent="Plane" groups=["CameraPos"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86537, 19.0557 )
 
 [node name="Old assest World" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 97.638, 0 )
@@ -119,6 +136,6 @@ environment = ExtResource( 8 )
 [node name="Water" parent="." instance=ExtResource( 10 )]
 visible = false
 
-[node name="Spatial" parent="." instance=ExtResource( 11 )]
+[node name="Objective" parent="." instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 449.881, 220.395, -1901.63 )
 visible = true

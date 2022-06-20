@@ -67,6 +67,10 @@ func _ready():
 	DebugOverlay.stats.add_property(self, "Fuel_flow", "round")
 
 
+func _process(delta):
+	$Arrow.look_at(get_node("/root/World/Objective").global_transform.origin,Vector3.UP)
+	$Position3D.look_at(get_parent().global_transform.origin,Vector3.UP)
+	
 func _physics_process(delta):
 
 	Altitude = (global_transform.origin.y)
@@ -82,10 +86,10 @@ func _physics_process(delta):
 	transform.basis = transform.basis.rotated(Vector3.UP, turn_input * turn_speed * delta)
 	# If on the ground, don't roll the body
 	if grounded:
-		$Mesh/Body.rotation.y = 0
+		$Mesh.rotation.y = 0
 	else:
 		# Roll the body based on the turn input
-		$Mesh/Body.rotation.y = lerp($Mesh/Body.rotation.y, turn_input, level_speed * delta)
+		$Mesh.rotation.y = lerp($Mesh.rotation.y, turn_input, level_speed * delta)
 	# Accelerate/decelerate
 	forward_speed = lerp(forward_speed, target_speed, acceleration * delta)
 	PROPELLOR.rotation_degrees.y += rad2deg(1.75*forward_speed * delta)
