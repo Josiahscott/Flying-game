@@ -1,7 +1,7 @@
 extends Camera
 
-export var lerp_speed = 0.35
-onready var target = get_parent().get_node("Plane")
+export var lerp_speed = 0.1
+onready var target = get_parent().get_node("Player")
 onready var camera_pos = get_tree().get_nodes_in_group("CameraPos")[0]
 #
 #export (NodePath) var target_path = null
@@ -11,7 +11,7 @@ onready var camera_pos = get_tree().get_nodes_in_group("CameraPos")[0]
 func _process(delta):
 	$Arrow.look_at(get_node("/root/World/Objective").global_transform.origin,Vector3.UP)
 	global_transform.origin = camera_pos.global_transform.origin
-	rotation = rotation(camera_pos.rotation,lerp_speed)
+	rotation = rotation.move_toward(target.rotation,lerp_speed)
 
 #func _ready():
 #	if target_path:

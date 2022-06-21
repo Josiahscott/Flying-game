@@ -1,6 +1,6 @@
 extends KinematicBody
 
-
+onready var objective = get_node("/root/World/Objective")
 onready var LEFT_AILERON = $Plane/Plane/Body/Parts/LEFT_AILERON
 onready var RIGHT_AILERON = $Plane/Plane/Body/Parts/RIGHT_AILERON
 onready var ELEVATOR = $Plane/Plane/Body/Parts/ELEVATOR
@@ -9,7 +9,7 @@ onready var ROLL = $Plane/Plane/Body
 onready var PROPELLOR = $Plane/Plane/Body/Parts/PROP
 onready var FLAPS = $Plane/Plane/Body/Parts/FLAPS
 var gravity = Vector3(0,rotation_degrees.x*3,0)
-
+signal new_objective
 var min_take_off_speed = 20
 # Can't fly below this speed
 var min_flight_speed = 0
@@ -40,6 +40,8 @@ var Flaps = 0
 #Fuel
 var Fuel = 100
 var Fuel_flow
+#points
+var points = 0
 
 var velocity = Vector3.ZERO
 var turn_input = 0
@@ -65,10 +67,10 @@ func _ready():
 	DebugOverlay.stats.add_property(self, "Flaps", "round")
 	DebugOverlay.stats.add_property(self, "Fuel", "round")
 	DebugOverlay.stats.add_property(self, "Fuel_flow", "round")
-
+	DebugOverlay.stats.add_property(self, "points", "round")
 
 func _process(delta):
-	$Arrow.look_at(get_node("/root/World/Objective").global_transform.origin,Vector3.UP)
+	
 	$Position3D.look_at(get_parent().global_transform.origin,Vector3.UP)
 	
 func _physics_process(delta):
@@ -110,6 +112,10 @@ func _physics_process(delta):
 	
 func get_input(delta):
 	# Throttle input
+	if Input.is_action_pressed("boost"): #testing
+		target_speed += 100
+	if Input.is_action_pressed("boost_minus"): #testing
+		target_speed -= 100
 	if Input.is_action_pressed("throttle_up"):
 		target_speed = min(forward_speed + throttle_delta * delta, max_flight_speed)
 	if Input.is_action_pressed("throttle_down"):
@@ -184,4 +190,8 @@ func get_input(delta):
 	
 func _on_Timer_timeout():
 	Fuel - Fuel_flow
-	
+
+func _on_Area_area_entered(area):
+	if area.is_in_group("Objective"):
+		points += 1
+		emit_signal("new_objective")
