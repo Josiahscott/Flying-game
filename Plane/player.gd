@@ -79,8 +79,13 @@ func _physics_process(delta):
 	RPM = forward_speed * 10
 	RPM = clamp(RPM,0,2400)
 	Flaps = FLAPS.rotation_degrees.x * -1
-	Fuel_flow = RPM / 1000
-
+	Fuel_flow = RPM / 100000
+	Fuel = Fuel - Fuel_flow
+	if RPM > 0:
+		PlayerStats.change_fuel(-Fuel_flow)
+		PlayerStats.change_alt(Altitude/100)
+		PlayerStats.change_speed(forward_speed)
+		PlayerStats.change_points(points)
 	
 	get_input(delta)
 	# Rotate the transform based on the input values
@@ -113,9 +118,9 @@ func _physics_process(delta):
 func get_input(delta):
 	# Throttle input
 	if Input.is_action_pressed("boost"): #testing
-		target_speed += 100
+		target_speed += 25
 	if Input.is_action_pressed("boost_minus"): #testing
-		target_speed -= 100
+		target_speed -= 25
 	if Input.is_action_pressed("throttle_up"):
 		target_speed = min(forward_speed + throttle_delta * delta, max_flight_speed)
 	if Input.is_action_pressed("throttle_down"):
@@ -188,10 +193,8 @@ func get_input(delta):
 	else:
 		gravity = Vector3(0,9.8*3,0)
 	
-func _on_Timer_timeout():
-	Fuel - Fuel_flow
-
 func _on_Area_area_entered(area):
 	if area.is_in_group("Objective"):
 		points += 1
 		emit_signal("new_objective")
+		PlayerStats.change_fuel(+30)

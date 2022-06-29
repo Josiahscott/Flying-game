@@ -1,9 +1,9 @@
 extends Camera
 
-export var lerp_speed = 0.1
+export var lerp_speed = 0.075
 onready var target = get_parent().get_node("Player")
 onready var camera_pos = get_tree().get_nodes_in_group("CameraPos")[0]
-#
+
 #export (NodePath) var target_path = null
 #export (Vector3) var offset = Vector3.ZERO
 
