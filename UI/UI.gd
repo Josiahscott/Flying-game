@@ -6,12 +6,13 @@ func _ready():
 	$Points/PointsBar.max_value = PlayerStats.points_max
 func _process(delta):
 	$Fuel/FuelBar.value = PlayerStats.get_fuel()
-	$Alt/Alt.value = PlayerStats.get_alt()*10
+	$Alt/Alt.value = PlayerStats.get_alt()
 	$Alt/Alt_Number.text = str(round(PlayerStats.alt*100))
 	$Speed/Speed.value = PlayerStats.get_speed()
-	$Speed/Speed_Number.text = str(round(PlayerStats.speed))
+	$Speed/Speed_Number.text = str(round(PlayerStats.speed*10))
 	$Points/PointsBar.value = PlayerStats.get_points()*10
 	#Flaps
 	#RPM
 	#Vertical Speed
+	#FIX SPEED ACC AND FUEL CONSUNPTION
 

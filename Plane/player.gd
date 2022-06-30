@@ -14,7 +14,7 @@ var min_take_off_speed = 20
 # Can't fly below this speed
 var min_flight_speed = 0
 # Maximum airspeed
-var max_flight_speed = 200
+var max_flight_speed = 300
 # Turn rate
 var turn_speed = 1.5
 # Climb/dive rate
@@ -24,7 +24,7 @@ var level_speed = 3.0
 # Throttle change speed
 var throttle_delta = 30
 # Acceleration/deceleration
-var acceleration = 15
+var acceleration = 30
 #Altitude
 var Altitude = 0
 # Current speed
@@ -70,7 +70,6 @@ func _ready():
 	DebugOverlay.stats.add_property(self, "points", "round")
 
 func _process(delta):
-	
 	$Position3D.look_at(get_parent().global_transform.origin,Vector3.UP)
 	
 func _physics_process(delta):
@@ -84,7 +83,7 @@ func _physics_process(delta):
 	if RPM > 0:
 		PlayerStats.change_fuel(-Fuel_flow)
 		PlayerStats.change_alt(Altitude/100)
-		PlayerStats.change_speed(forward_speed)
+		PlayerStats.change_speed(forward_speed/100)
 		PlayerStats.change_points(points)
 	
 	get_input(delta)
