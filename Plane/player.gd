@@ -78,13 +78,14 @@ func _physics_process(delta):
 	RPM = forward_speed * 10
 	RPM = clamp(RPM,0,2400)
 	Flaps = FLAPS.rotation_degrees.x * -1
-	Fuel_flow = RPM / 100000
+	Fuel_flow = forward_speed / 10000
 	Fuel = Fuel - Fuel_flow
 	if RPM > 0:
 		PlayerStats.change_fuel(-Fuel_flow)
 		PlayerStats.change_alt(Altitude/100)
 		PlayerStats.change_speed(forward_speed/100)
 		PlayerStats.change_points(points)
+		PlayerStats.change_flaps(Flaps)
 	
 	get_input(delta)
 	# Rotate the transform based on the input values
