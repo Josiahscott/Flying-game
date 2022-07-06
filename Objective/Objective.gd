@@ -14,6 +14,13 @@ func _ready():
 	print(number) #To call a random variable e.g random airfield instead of random place on map once airfield design is done
 	
 	global_transform.origin = Vector3(randi() % 10000, randi() % 10000, randi() % 10000)
+#	rotation.y = rand_range(-2.5, 2.5 * PI)
+#	print(rotation.y)
 
 func change_location():
 	global_transform.origin = Vector3(randi() % 10000, randi() % 10000, randi() % 10000)
+#	rotation.y = rand_range(0, 360)
+#	print(rotation.y)
+	
+func _physics_process(delta):
+		look_at(player.global_transform.origin,Vector3.UP)
