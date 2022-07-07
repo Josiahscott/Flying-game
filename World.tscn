@@ -67,22 +67,22 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 449.881, 220.395, -1901.63 )
 
 [node name="UI" parent="." instance=ExtResource( 12 )]
 
-[node name="1" type="MeshInstance" parent="." groups=["Objective"]]
+[node name="1" type="MeshInstance" parent="." groups=["locations"]]
 transform = Transform( 500, 0, 0, 0, 500, 0, 0, 0, 500, 0, 736.158, 0 )
 mesh = SubResource( 13 )
 material/0 = null
 
-[node name="2" type="MeshInstance" parent="." groups=["Objective"]]
+[node name="2" type="MeshInstance" parent="." groups=["locations"]]
 transform = Transform( 500, 0, 0, 0, 500, 0, 0, 0, 500, 3597.82, 736.158, 0 )
 mesh = SubResource( 13 )
 material/0 = null
 
-[node name="3" type="MeshInstance" parent="." groups=["Objective"]]
+[node name="3" type="MeshInstance" parent="." groups=["locations"]]
 transform = Transform( 500, 0, 0, 0, 500, 0, 0, 0, 500, 3597.82, 736.158, 5329.68 )
 mesh = SubResource( 13 )
 material/0 = null
 
-[node name="4" type="MeshInstance" parent="." groups=["Objective"]]
+[node name="4" type="MeshInstance" parent="." groups=["locations"]]
 transform = Transform( -181.219, 466.004, 0, -466.004, -181.219, 0, 0, 0, 500, -1388.25, 736.158, 5329.68 )
 mesh = SubResource( 13 )
 material/0 = null

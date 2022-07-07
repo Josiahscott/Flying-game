@@ -9,7 +9,8 @@ onready var ROLL = $Plane/Plane/Body
 onready var PROPELLOR = $Plane/Plane/Body/Parts/PROP
 onready var FLAPS = $Plane/Plane/Body/Parts/FLAPS
 var gravity = Vector3(0,rotation_degrees.x*3,0)
-signal new_objective
+signal new_location
+
 var min_take_off_speed = 20
 # Can't fly below this speed
 var min_flight_speed = 0
@@ -196,5 +197,5 @@ func get_input(delta):
 func _on_Area_area_entered(area):
 	if area.is_in_group("Objective"):
 		points += 1
-		emit_signal("new_objective")
+		emit_signal("new_location")
 		PlayerStats.change_fuel(+30)
