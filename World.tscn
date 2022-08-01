@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Plane/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
@@ -21,7 +21,19 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="CylinderMesh" id=13]
+[sub_resource type="CubeMesh" id=13]
+
+[sub_resource type="CubeMesh" id=14]
+size = Vector3( 300, 5, 25 )
+
+[sub_resource type="SpatialMaterial" id=15]
+albedo_color = Color( 0, 0.831373, 0.0313726, 1 )
+
+[sub_resource type="BoxShape" id=16]
+extents = Vector3( 150, 2.5, 12.5 )
+
+[sub_resource type="CubeMesh" id=17]
+size = Vector3( 50, 5, 50 )
 
 [node name="World" type="Spatial"]
 script = ExtResource( 2 )
@@ -67,22 +79,37 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 449.881, 220.395, -1901.63 )
 
 [node name="UI" parent="." instance=ExtResource( 12 )]
 
-[node name="1" type="MeshInstance" parent="." groups=["locations"]]
-transform = Transform( 500, 0, 0, 0, 500, 0, 0, 0, 500, 0, 736.158, 0 )
+[node name="Airfields" type="Node" parent="."]
+
+[node name="1" type="Spatial" parent="Airfields"]
+transform = Transform( 0.960235, 0.279192, 0, -0.279192, 0.960235, 0, 0, 0, 1, 1463.28, 568.671, 1368.47 )
+
+[node name="Points" type="Spatial" parent="Airfields/1" groups=["locations"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -135.865, 6.18451, 17.6582 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Airfields/1/Points"]
 mesh = SubResource( 13 )
 material/0 = null
 
-[node name="2" type="MeshInstance" parent="." groups=["locations"]]
-transform = Transform( 500, 0, 0, 0, 500, 0, 0, 0, 500, 3597.82, 736.158, 0 )
-mesh = SubResource( 13 )
-material/0 = null
+[node name="Runway" type="MeshInstance" parent="Airfields/1"]
+transform = Transform( 0.999845, 0.0176443, 0, -0.0176443, 0.999845, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 14 )
+material/0 = SubResource( 15 )
 
-[node name="3" type="MeshInstance" parent="." groups=["locations"]]
-transform = Transform( 500, 0, 0, 0, 500, 0, 0, 0, 500, 3597.82, 736.158, 5329.68 )
-mesh = SubResource( 13 )
-material/0 = null
+[node name="KinematicBody" type="KinematicBody" parent="Airfields/1/Runway"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
-[node name="4" type="MeshInstance" parent="." groups=["locations"]]
-transform = Transform( -181.219, 466.004, 0, -466.004, -181.219, 0, 0, 0, 500, -1388.25, 736.158, 5329.68 )
-mesh = SubResource( 13 )
-material/0 = null
+[node name="CollisionShape" type="CollisionShape" parent="Airfields/1/Runway/KinematicBody"]
+shape = SubResource( 16 )
+
+[node name="Taxi" type="MeshInstance" parent="Airfields/1"]
+transform = Transform( 0.99987, 0.0161434, 0, -0.0161434, 0.99987, 0, 0, 0, 1, -121.135, 2.09027, 37.3599 )
+mesh = SubResource( 17 )
+skeleton = NodePath("../Runway")
+material/0 = SubResource( 15 )
+
+[node name="KinematicBody" type="KinematicBody" parent="Airfields/1/Taxi"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Airfields/1/Taxi/KinematicBody"]
+shape = SubResource( 16 )
