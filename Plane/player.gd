@@ -198,4 +198,4 @@ func _on_Area_area_entered(area):
 	if area.is_in_group("Objective"):
 		points += 1
 		emit_signal("new_location")
-		PlayerStats.change_fuel(+30)
+		PlayerStats.change_fuel(+35)

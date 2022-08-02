@@ -97,7 +97,6 @@ mesh = SubResource( 14 )
 material/0 = SubResource( 15 )
 
 [node name="KinematicBody" type="KinematicBody" parent="Airfields/1/Runway"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Airfields/1/Runway/KinematicBody"]
 shape = SubResource( 16 )
@@ -109,7 +108,6 @@ skeleton = NodePath("../Runway")
 material/0 = SubResource( 15 )
 
 [node name="KinematicBody" type="KinematicBody" parent="Airfields/1/Taxi"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Airfields/1/Taxi/KinematicBody"]
 shape = SubResource( 16 )
