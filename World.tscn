@@ -43,6 +43,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2889.95, 169.434, -2516.67 )
 current = true
 far = 50000.0
 script = ExtResource( 3 )
+target_path = NodePath("../Player")
+offset = Vector3( 0, 0, 5 )
 
 [node name="Arrow" type="Spatial" parent="Camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.9682, -19.2056 )
