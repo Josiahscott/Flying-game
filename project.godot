@@ -27,10 +27,16 @@ config/icon="res://icon.png"
 DebugOverlay="*res://debug/DebugOverlay.tscn"
 PlayerStats="*res://PlayerStats.gd"
 
+[display]
+
+window/size/width=1920
+window/size/height=1080
+
 [global]
 
 distance=false
 render=false
+display=false
 
 [input]
 
