@@ -5,7 +5,7 @@
 [ext_resource path="res://Title + loading screen/New photos/cooltext416802825367179 (1).png" type="Texture" id=3]
 [ext_resource path="res://Title + loading screen/New photos/cooltext416802838444061.png" type="Texture" id=4]
 [ext_resource path="res://Title + loading screen/New photos/cooltext416803001864499.png" type="Texture" id=5]
-[ext_resource path="res://Title + loading screen/Old photos/roland-kontson-fire-composite.jpg" type="Texture" id=6]
+[ext_resource path="res://Title + loading screen/Titiel.jpg" type="Texture" id=6]
 
 [node name="Title" type="Control"]
 anchor_right = 1.0

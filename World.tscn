@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Plane/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
@@ -21,6 +21,15 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
+[sub_resource type="CubeMesh" id=18]
+size = Vector3( 30, 5, 200 )
+
+[sub_resource type="SpatialMaterial" id=19]
+albedo_color = Color( 0.517647, 0.517647, 0.517647, 1 )
+
+[sub_resource type="BoxShape" id=16]
+extents = Vector3( 15, 2.5, 100 )
+
 [sub_resource type="CubeMesh" id=13]
 
 [sub_resource type="CubeMesh" id=14]
@@ -28,9 +37,6 @@ size = Vector3( 300, 5, 25 )
 
 [sub_resource type="SpatialMaterial" id=15]
 albedo_color = Color( 0, 0.831373, 0.0313726, 1 )
-
-[sub_resource type="BoxShape" id=16]
-extents = Vector3( 150, 2.5, 12.5 )
 
 [sub_resource type="CubeMesh" id=17]
 size = Vector3( 50, 5, 50 )
@@ -44,7 +50,7 @@ current = true
 far = 50000.0
 script = ExtResource( 3 )
 target_path = NodePath("../Player")
-offset = Vector3( 0, 0, 5 )
+offset = Vector3( 0, 0, 10 )
 
 [node name="Arrow" type="Spatial" parent="Camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.9682, -19.2056 )
@@ -56,7 +62,7 @@ skeleton = NodePath("../..")
 material/0 = SubResource( 12 )
 
 [node name="Player" parent="." groups=["PlanePos"] instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2889.95, 167.569, -2535.73 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5321.56, 87.7691, 3522.07 )
 
 [node name="OmniLight" type="OmniLight" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 762.983, 1.67334 )
@@ -74,12 +80,29 @@ transform = Transform( 750, 0, 0, 0, 600, 0, 0, 0, 750, 0, 866.479, 0 )
 environment = ExtResource( 4 )
 
 [node name="Water" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, -1254.49, 0 )
 visible = false
 
 [node name="Objective" parent="." instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 449.881, 220.395, -1901.63 )
 
 [node name="UI" parent="." instance=ExtResource( 12 )]
+
+[node name="Main Airport" type="Node" parent="."]
+
+[node name="Spatial" type="Spatial" parent="Main Airport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5320.74, 0, 3431.64 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Main Airport/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 80.2765, 0 )
+mesh = SubResource( 18 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 19 )
+
+[node name="KinematicBody" type="KinematicBody" parent="Main Airport/Spatial/MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Main Airport/Spatial/MeshInstance/KinematicBody"]
+shape = SubResource( 16 )
 
 [node name="Airfields" type="Node" parent="."]
 
@@ -91,7 +114,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -135.865, 6.18451, 17.6582 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Airfields/1/Points"]
 mesh = SubResource( 13 )
-material/0 = null
 
 [node name="Runway" type="MeshInstance" parent="Airfields/1"]
 transform = Transform( 0.999845, 0.0176443, 0, -0.0176443, 0.999845, 0, 0, 0, 1, 0, 0, 0 )

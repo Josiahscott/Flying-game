@@ -4,12 +4,12 @@
 [ext_resource path="res://Plane/Plane.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CylinderShape" id=16]
-radius = 0.955744
-height = 7.11038
+height = 7.42816
+radius = 1.24261
 
 [sub_resource type="CylinderShape" id=17]
-radius = 0.568409
 height = 11.3063
+radius = 0.568409
 
 [sub_resource type="BoxShape" id=18]
 extents = Vector3( 0.683841, 0.597474, 2.36051 )

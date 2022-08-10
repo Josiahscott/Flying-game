@@ -15,7 +15,7 @@ var min_take_off_speed = 20
 # Can't fly below this speed
 var min_flight_speed = 0
 # Maximum airspeed
-var max_flight_speed = 300
+var max_flight_speed = 90
 # Turn rate
 var turn_speed = 1.5
 # Climb/dive rate
@@ -69,12 +69,15 @@ func _ready():
 	DebugOverlay.stats.add_property(self, "Fuel", "round")
 	DebugOverlay.stats.add_property(self, "Fuel_flow", "round")
 	DebugOverlay.stats.add_property(self, "points", "round")
+	Soundplayer.play("res://Sound/sound_grgyZSwY.mp3")
+	Soundplayer.play("res://Sound/kenny_loggins_danger_zone_video_-2123930807108585114.mp3")
 
 func _process(delta):
 	$Position3D.look_at(get_parent().global_transform.origin,Vector3.UP)
 	
 func _physics_process(delta):
 
+#	Soundplayer.voice_set_pitch_scale(0,forward_speed)
 	Altitude = (global_transform.origin.y)
 	RPM = forward_speed * 10
 	RPM = clamp(RPM,0,2400)
@@ -119,9 +122,9 @@ func _physics_process(delta):
 func get_input(delta):
 	# Throttle input
 	if Input.is_action_pressed("boost"): #testing
-		target_speed += 25
+		target_speed += 0
 	if Input.is_action_pressed("boost_minus"): #testing
-		target_speed -= 25
+		target_speed -= 0
 	if Input.is_action_pressed("throttle_up"):
 		target_speed = min(forward_speed + throttle_delta * delta, max_flight_speed)
 	if Input.is_action_pressed("throttle_down"):

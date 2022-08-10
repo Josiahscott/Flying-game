@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/kenny_loggins_danger_zone_video_-2123930807108585114.mp3-baa8674d96e037b1a1e0ceaccf44528a.mp3str"
+
+[deps]
+
+source_file="res://Sound/kenny_loggins_danger_zone_video_-2123930807108585114.mp3"
+dest_files=[ "res://.import/kenny_loggins_danger_zone_video_-2123930807108585114.mp3-baa8674d96e037b1a1e0ceaccf44528a.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
