@@ -11,6 +11,6 @@ func _process(delta):
 	$Alt/Alt_Number.text = str(round(PlayerStats.alt*100))
 	$Speed/Speed.value = (PlayerStats.get_speed()*100)
 	$Speed/Speed_Number.text = str(round(PlayerStats.speed*100))
-	$Points/PointsBar.value = PlayerStats.get_points()*10
+	$Points/PointsBar.value = PlayerStats.get_points()
 	$Flaps/FlapsBar.value = PlayerStats.get_flaps()*3.5
 

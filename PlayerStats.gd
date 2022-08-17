@@ -50,3 +50,10 @@ func change_points(amount):
 
 func get_points():
 	return points
+
+func _physics_process(delta):
+	if points == 100:
+		get_tree().change_scene("res://game end or win/Game win.tscn")
+	if fuel == 0:
+		get_tree().change_scene("res://game end or win/Game End.tscn")
+

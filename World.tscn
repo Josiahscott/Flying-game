@@ -27,10 +27,11 @@ size = Vector3( 30, 5, 200 )
 [sub_resource type="SpatialMaterial" id=19]
 albedo_color = Color( 0.517647, 0.517647, 0.517647, 1 )
 
-[sub_resource type="BoxShape" id=16]
+[sub_resource type="BoxShape" id=20]
 extents = Vector3( 15, 2.5, 100 )
 
 [sub_resource type="CubeMesh" id=13]
+size = Vector3( 1, 1, 1 )
 
 [sub_resource type="CubeMesh" id=14]
 size = Vector3( 300, 5, 25 )
@@ -38,14 +39,14 @@ size = Vector3( 300, 5, 25 )
 [sub_resource type="SpatialMaterial" id=15]
 albedo_color = Color( 0, 0.831373, 0.0313726, 1 )
 
-[sub_resource type="CubeMesh" id=17]
-size = Vector3( 50, 5, 50 )
+[sub_resource type="BoxShape" id=16]
+extents = Vector3( 150, 2.5, 12.5 )
 
 [node name="World" type="Spatial"]
 script = ExtResource( 2 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2889.95, 169.434, -2516.67 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5216.78, 169.434, 3725.61 )
 current = true
 far = 50000.0
 script = ExtResource( 3 )
@@ -102,7 +103,7 @@ material/0 = SubResource( 19 )
 [node name="KinematicBody" type="KinematicBody" parent="Main Airport/Spatial/MeshInstance"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Main Airport/Spatial/MeshInstance/KinematicBody"]
-shape = SubResource( 16 )
+shape = SubResource( 20 )
 
 [node name="Airfields" type="Node" parent="."]
 
@@ -110,9 +111,10 @@ shape = SubResource( 16 )
 transform = Transform( 0.960235, 0.279192, 0, -0.279192, 0.960235, 0, 0, 0, 1, 1463.28, 568.671, 1368.47 )
 
 [node name="Points" type="Spatial" parent="Airfields/1" groups=["locations"]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -135.865, 6.18451, 17.6582 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -135.865, 6.18457, 17.6582 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Airfields/1/Points"]
+transform = Transform( 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 13 )
 
 [node name="Runway" type="MeshInstance" parent="Airfields/1"]
@@ -123,15 +125,4 @@ material/0 = SubResource( 15 )
 [node name="KinematicBody" type="KinematicBody" parent="Airfields/1/Runway"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Airfields/1/Runway/KinematicBody"]
-shape = SubResource( 16 )
-
-[node name="Taxi" type="MeshInstance" parent="Airfields/1"]
-transform = Transform( 0.99987, 0.0161434, 0, -0.0161434, 0.99987, 0, 0, 0, 1, -121.135, 2.09027, 37.3599 )
-mesh = SubResource( 17 )
-skeleton = NodePath("../Runway")
-material/0 = SubResource( 15 )
-
-[node name="KinematicBody" type="KinematicBody" parent="Airfields/1/Taxi"]
-
-[node name="CollisionShape" type="CollisionShape" parent="Airfields/1/Taxi/KinematicBody"]
 shape = SubResource( 16 )

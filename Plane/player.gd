@@ -8,20 +8,24 @@ onready var RUDDER = $Plane/Plane/Body/Parts/RUDDER
 onready var ROLL = $Plane/Plane/Body
 onready var PROPELLOR = $Plane/Plane/Body/Parts/PROP
 onready var FLAPS = $Plane/Plane/Body/Parts/FLAPS
-var gravity = Vector3(0,rotation_degrees.x*3,0)
+onready var Enginesound = $Enginesound
+onready var Point = $Point
+
+var gravity = Vector3(0,30,0)
+
 signal new_location
 
 var min_take_off_speed = 20
 # Can't fly below this speed
-var min_flight_speed = 0
+var min_flight_speed = 10
 # Maximum airspeed
-var max_flight_speed = 90
+var max_flight_speed = 100
 # Turn rate
-var turn_speed = 1.5
+var turn_speed = 1
 # Climb/dive rate
-var pitch_speed = 1.5
+var pitch_speed = 1
 # Lerp speed returning wings to level
-var level_speed = 3.0
+var level_speed = 2
 # Throttle change speed
 var throttle_delta = 30
 # Acceleration/deceleration
@@ -61,36 +65,39 @@ var ROLL_RIGHT_TARGET = Vector3(0,-40,0)
 var FLAPS_DOWN_TARGET = Vector3(-30,0,0) 
 
 func _ready():
-	DebugOverlay.stats.add_property(self, "grounded", "")
-	DebugOverlay.stats.add_property(self, "forward_speed", "round")
-	DebugOverlay.stats.add_property(self, "Altitude", "round")
-	DebugOverlay.stats.add_property(self, "RPM", "round")
-	DebugOverlay.stats.add_property(self, "Flaps", "round")
-	DebugOverlay.stats.add_property(self, "Fuel", "round")
-	DebugOverlay.stats.add_property(self, "Fuel_flow", "round")
-	DebugOverlay.stats.add_property(self, "points", "round")
-	Soundplayer.play("res://Sound/sound_grgyZSwY.mp3")
-	Soundplayer.play("res://Sound/kenny_loggins_danger_zone_video_-2123930807108585114.mp3")
+#	DebugOverlay.stats.add_property(self, "grounded", "")
+#	DebugOverlay.stats.add_property(self, "forward_speed", "round")
+#	DebugOverlay.stats.add_property(self, "Altitude", "round")
+#	DebugOverlay.stats.add_property(self, "RPM", "round")
+#	DebugOverlay.stats.add_property(self, "Flaps", "round")
+#	DebugOverlay.stats.add_property(self, "Fuel", "round")
+#	DebugOverlay.stats.add_property(self, "Fuel_flow", "round")
+#	DebugOverlay.stats.add_property(self, "points", "round")
+#	DebugOverlay.stats.add_property(self, "gravity", "round")
+
+	Enginesound.play()
+#	Soundplayer.play("res://Sound/kenny_loggins_danger_zone_video_-2123930807108585114.mp3")
 
 func _process(delta):
 	$Position3D.look_at(get_parent().global_transform.origin,Vector3.UP)
 	
 func _physics_process(delta):
 
-#	Soundplayer.voice_set_pitch_scale(0,forward_speed)
 	Altitude = (global_transform.origin.y)
 	RPM = forward_speed * 10
 	RPM = clamp(RPM,0,2400)
 	Flaps = FLAPS.rotation_degrees.x * -1
 	Fuel_flow = forward_speed / 10000
 	Fuel = Fuel - Fuel_flow
+	Enginesound.pitch_scale = 1 + (forward_speed/100)
 	if RPM > 0:
+
 		PlayerStats.change_fuel(-Fuel_flow)
 		PlayerStats.change_alt(Altitude/100)
 		PlayerStats.change_speed(forward_speed/100)
 		PlayerStats.change_points(points)
 		PlayerStats.change_flaps(Flaps)
-	
+
 	get_input(delta)
 	# Rotate the transform based on the input values
 	transform.basis = transform.basis.rotated(transform.basis.x, pitch_input * pitch_speed * delta)
@@ -189,16 +196,15 @@ func get_input(delta):
 	else:
 		ELEVATOR.rotation_degrees = lerp(ELEVATOR.rotation_degrees, Vector3.ZERO, .1)
 	if Input.is_action_pressed("flaps_down"):
-		gravity = Vector3(0,9.8*2,0)
+		gravity = Vector3(0,30+(FLAPS.rotation_degrees.x/2),0) 
 		FLAPS.rotation_degrees = lerp(FLAPS.rotation_degrees, FLAPS_DOWN_TARGET, .1)
 	if Input.is_action_pressed("flaps_up"):
-		gravity = Vector3(0,9.8*3,0)
+		gravity = Vector3(0,30+(FLAPS.rotation_degrees.x/2),0)
 		FLAPS.rotation_degrees = lerp(FLAPS.rotation_degrees, Vector3.ZERO, .1)
-	else:
-		gravity = Vector3(0,9.8*3,0)
 	
 func _on_Area_area_entered(area):
 	if area.is_in_group("Objective"):
-		points += 1
+		Point.play()
+		points += 10
 		emit_signal("new_location")
-		PlayerStats.change_fuel(+35)
+		PlayerStats.change_fuel(+33)
