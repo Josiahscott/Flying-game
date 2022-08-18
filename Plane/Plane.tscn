@@ -4,7 +4,7 @@
 
 [node name="Plane" instance=ExtResource( 1 )]
 
-[node name="FLAPS" parent="Plane/Body/Parts" index="3"]
+[node name="FLAPS" parent="Plane/Body/Parts" index="4"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.583941, 0.550695 )
 
 [node name="LEFT_AILERON" parent="Plane/Body/Parts" index="5"]

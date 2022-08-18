@@ -28,7 +28,7 @@ size = Vector3( 10, 10, 10 )
 script = ExtResource( 2 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5216.78, 169.434, 3725.61 )
+transform = Transform( -0.0484662, 0, -0.998825, 0, 1, 0, 0.998825, 0, -0.0484662, 3194.52, 684.521, -337.03 )
 current = true
 far = 50000.0
 script = ExtResource( 3 )
@@ -45,7 +45,7 @@ skeleton = NodePath("../..")
 material/0 = SubResource( 12 )
 
 [node name="Player" parent="." groups=["PlanePos"] instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5321.56, 87.7691, 3522.07 )
+transform = Transform( -0.597334, 0.0364815, -0.801163, 0.0244159, 0.999329, 0.027301, 0.801621, -0.00325332, -0.597823, 3392.74, 601.045, -194.874 )
 
 [node name="OmniLight" type="OmniLight" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 762.983, 1.67334 )

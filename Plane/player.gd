@@ -15,21 +15,21 @@ var gravity = Vector3(0,30,0)
 
 signal new_location
 
-var min_take_off_speed = 20
+var min_take_off_speed = 15
 # Can't fly below this speed
-var min_flight_speed = 10
+var min_flight_speed = 15
 # Maximum airspeed
-var max_flight_speed = 100
+var max_flight_speed = 90
 # Turn rate
 var turn_speed = 1
 # Climb/dive rate
 var pitch_speed = 1
 # Lerp speed returning wings to level
-var level_speed = 2
+var level_speed = 1
 # Throttle change speed
 var throttle_delta = 30
 # Acceleration/deceleration
-var acceleration = 30
+var acceleration = 20
 #Altitude
 var Altitude = 0
 # Current speed
@@ -115,8 +115,8 @@ func _physics_process(delta):
 	velocity = -transform.basis.z * forward_speed
 	# Handle landing/taking off
 	if is_on_floor():
-		if not grounded:
-			rotation.x = 0
+#		if not grounded:
+#			rotation.x = 0
 		velocity.y -= 1
 		grounded = true
 	else:
@@ -157,14 +157,14 @@ func get_input(delta):
 
 	if Input.is_action_pressed("roll_left"):
 		if not grounded:
-			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, ROLL_LEFT_TARGET, .1)
+			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, ROLL_LEFT_TARGET, .04)
 	else:
-			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, Vector3.ZERO, .1)
+			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, Vector3.ZERO, .04)
 	if Input.is_action_pressed("roll_right"):
 		if not grounded:
-			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, ROLL_RIGHT_TARGET, .1)
+			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, ROLL_RIGHT_TARGET, .04)
 	else:
-			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, Vector3.ZERO, .1)
+			ROLL.rotation_degrees = lerp(ROLL.rotation_degrees, Vector3.ZERO, .04)
 			
 	if Input.is_action_pressed("roll_left"):
 		LEFT_AILERON.rotation_degrees = lerp(LEFT_AILERON.rotation_degrees, LEFT_UP_TARGET, .1)
