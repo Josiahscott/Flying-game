@@ -15,9 +15,9 @@ var gravity = Vector3(0,30,0)
 
 signal new_location
 
-var min_take_off_speed = 15
+var min_take_off_speed = 30
 # Can't fly below this speed
-var min_flight_speed = 15
+var min_flight_speed = 20
 # Maximum airspeed
 var max_flight_speed = 90
 # Turn rate

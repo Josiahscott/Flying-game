@@ -1,24 +1,25 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Objective/Objective.gd" type="Script" id=1]
+[ext_resource path="res://Objective/untitled.tscn" type="PackedScene" id=2]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 5, 5, 5 )
+extents = Vector3( 2.71544, 3.55797, 0.699372 )
 
-[sub_resource type="CubeMesh" id=2]
-size = Vector3( 10, 10, 10 )
-
-[sub_resource type="SpatialMaterial" id=3]
-albedo_color = Color( 1, 0, 0, 1 )
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 2.82975, 3.5604, 1 )
 
 [node name="Objective" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="Area" type="Area" parent="." groups=["Objective"]]
+[node name="RigidBody" type="RigidBody" parent="."]
 
-[node name="CollisionShape" type="CollisionShape" parent="Area"]
+[node name="Area" type="Area" parent="RigidBody" groups=["Objective"]]
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody/Area"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-mesh = SubResource( 2 )
-material/0 = SubResource( 3 )
+[node name="untitled2" parent="RigidBody" instance=ExtResource( 2 )]
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
+shape = SubResource( 2 )

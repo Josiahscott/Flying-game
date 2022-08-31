@@ -6,8 +6,12 @@ onready var new_obj = player.connect("new_location", self, "change_location")
 
 func _ready():
 	randomize()
-	global_transform.origin = Vector3(5000,5000,5000) #change this to main airport when ready
+#	global_transform.origin = Vector3(3300,1000,-300)
+	global_transform.origin = Vector3(randi() % 5000, 2000, randi() % 5000)
+#	global_transform.origin = locations[randi()%len(locations)].global_transform.origin
 #	change_location()
 	
 func change_location():
-	global_transform.origin = locations[randi()%len(locations)].global_transform.origin
+#	global_transform.origin = locations[randi()%len(locations)].global_transform.origin
+	global_transform.origin = Vector3(randi() % 5000, 2000, randi() % 5000)
+	pass
