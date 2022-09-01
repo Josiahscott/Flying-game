@@ -15,9 +15,9 @@ var gravity = Vector3(0,30,0)
 
 signal new_location
 
-var min_take_off_speed = 30
+var min_take_off_speed = 10
 # Can't fly below this speed
-var min_flight_speed = 20
+var min_flight_speed = 10
 # Maximum airspeed
 var max_flight_speed = 90
 # Turn rate
@@ -87,7 +87,7 @@ func _physics_process(delta):
 	RPM = forward_speed * 10
 	RPM = clamp(RPM,0,2400)
 	Flaps = FLAPS.rotation_degrees.x * -1
-	Fuel_flow = forward_speed / 10000
+	Fuel_flow = forward_speed / 50000
 	Fuel = Fuel - Fuel_flow
 	Enginesound.pitch_scale = 1 + (forward_speed/100)
 	if RPM > 0:
@@ -204,7 +204,8 @@ func get_input(delta):
 	
 func _on_Area_area_entered(area):
 	if area.is_in_group("Objective"):
-		Point.play()
-		points += 10
-		emit_signal("new_location")
-		PlayerStats.change_fuel(+33)
+		if forward_speed < 20:
+			Point.play()
+			points += 10
+			emit_signal("new_location")
+			PlayerStats.change_fuel(+33)

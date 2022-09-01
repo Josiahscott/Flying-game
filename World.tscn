@@ -57,7 +57,7 @@ skeleton = NodePath("../..")
 material/0 = SubResource( 12 )
 
 [node name="Player" parent="." groups=["PlanePos"] instance=ExtResource( 1 )]
-transform = Transform( -0.597334, 0.0364815, -0.801163, 0.0244159, 0.999329, 0.027301, 0.801621, -0.00325332, -0.597823, 3392.74, 601.045, -194.874 )
+transform = Transform( -0.458696, 0, -0.888593, 0, 1, 0, 0.888593, 0, -0.458696, 3318.53, 588.925, -244.562 )
 
 [node name="OmniLight" type="OmniLight" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 762.983, 1.67334 )
