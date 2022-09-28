@@ -15,15 +15,15 @@ var gravity = Vector3(0,30,0)
 
 signal new_location
 
-var min_take_off_speed = 10
+var min_take_off_speed = 20
 # Can't fly below this speed
 var min_flight_speed = 10
 # Maximum airspeed
-var max_flight_speed = 90
+var max_flight_speed = 100
 # Turn rate
 var turn_speed = 1
 # Climb/dive rate
-var pitch_speed = 1
+var pitch_speed = 0.75
 # Lerp speed returning wings to level
 var level_speed = 1
 # Throttle change speed
@@ -75,13 +75,18 @@ func _ready():
 #	DebugOverlay.stats.add_property(self, "points", "round")
 #	DebugOverlay.stats.add_property(self, "gravity", "round")
 
+
 	Enginesound.play()
 #	Soundplayer.play("res://Sound/kenny_loggins_danger_zone_video_-2123930807108585114.mp3")
 
 func _process(delta):
 	$Position3D.look_at(get_parent().global_transform.origin,Vector3.UP)
-	
+
 func _physics_process(delta):
+	if forward_speed > 65:
+		if grounded:
+			get_tree().change_scene("res://game end or win/Game End.tscn")
+
 
 	Altitude = (global_transform.origin.y)
 	RPM = forward_speed * 10
