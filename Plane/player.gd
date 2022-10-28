@@ -47,7 +47,7 @@ var Fuel = 100
 var Fuel_flow
 #points
 var points = 0
-
+var Engine_on = false
 var velocity = Vector3.ZERO
 var turn_input = 0
 var pitch_input = 0
@@ -76,9 +76,9 @@ func _ready():
 #	DebugOverlay.stats.add_property(self, "gravity", "round")
 
 
-	Enginesound.play()
+#	Enginesound.play()
 #	Soundplayer.play("res://Sound/kenny_loggins_danger_zone_video_-2123930807108585114.mp3")
-
+	pass
 func _process(delta):
 	$Position3D.look_at(get_parent().global_transform.origin,Vector3.UP)
 
@@ -131,14 +131,16 @@ func _physics_process(delta):
 		velocity = velocity - current_gravity
 	velocity = move_and_slide(velocity, Vector3.UP)
 	
+	
 func get_input(delta):
 	# Throttle input
-	if Input.is_action_pressed("boost"): #testing
-		target_speed += 0
-	if Input.is_action_pressed("boost_minus"): #testing
-		target_speed -= 0
-	if Input.is_action_pressed("throttle_up"):
-		target_speed = min(forward_speed + throttle_delta * delta, max_flight_speed)
+	if forward_speed == 0:
+		if Input.is_action_pressed("Engine"):
+			Enginesound.play()
+			Engine_on = true
+	if Engine_on == true:
+		if Input.is_action_pressed("throttle_up"):
+			target_speed = min(forward_speed + throttle_delta * delta, max_flight_speed)
 	if Input.is_action_pressed("throttle_down"):
 		var limit = 0 if grounded else min_flight_speed
 		target_speed = max(forward_speed - throttle_delta * delta, limit)
